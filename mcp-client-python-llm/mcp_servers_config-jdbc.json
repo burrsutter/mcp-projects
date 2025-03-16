@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+      "weather": {
+          "command": "jbang",
+          "args": [
+             "--java",
+             "21",
+             "--quiet",
+             "org.acme:weather:1.0.0-SNAPSHOT:runner"
+         ]
+       },
+       "jdbc": {
+          "command": "/Users/burr/.jbang/bin/jbang",
+          "args": [
+            "--quiet",
+            "mcp-server-jdbc@quarkiverse/quarkus-mcp-servers",
+            "jdbc:postgresql://localhost:5432/my_mcp?user=postgres&password=admin"
+          ]
+        }         
+  }
+}
