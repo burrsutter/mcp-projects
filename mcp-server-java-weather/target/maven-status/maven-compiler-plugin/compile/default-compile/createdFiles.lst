@@ -1,8 +1,0 @@
-org/acme/Weather.class
-org/acme/Weather$Alerts.class
-org/acme/Weather$Forecast.class
-org/acme/Weather$Period.class
-org/acme/Weather$ForecastProperties.class
-org/acme/Weather$WeatherClient.class
-org/acme/Weather$Feature.class
-org/acme/Weather$Properties.class

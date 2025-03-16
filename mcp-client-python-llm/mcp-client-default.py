@@ -192,7 +192,7 @@ async def main():
         print("Usage: python client.py <path_to_server_script>")
         sys.exit(1)
         
-    client = MCPClient()
+    client = MCPClient(debug=False)
     try:
         await client.connect_to_server(sys.argv[1])
         await client.chat_loop()

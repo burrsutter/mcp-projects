@@ -39,21 +39,30 @@ class MCPClient:
             base_url=INFERENCE_SERVER_URL
         )
 
-    async def connect_to_server(self, server_script_path: str):
+    async def connect_to_server(self):
         """Connect to an MCP server
-        
-        Args:
-            server_script_path: Path to the server script (.py or .js)
+    
         """
-        is_python = server_script_path.endswith('.py')
-        is_js = server_script_path.endswith('.js')
-        if not (is_python or is_js):
-            raise ValueError("Server script must be a .py or .js file")
-            
-        command = "python" if is_python else "node"
+
+        # args for CRUD via Postgres
+        # args = [
+        #     "--quiet",
+        #     "mcp-server-jdbc@quarkiverse/quarkus-mcp-servers",
+        #     "jdbc:postgresql://localhost:5432/my_mcp?user=postgres&password=admin"
+        #   ]
+
+        # args for Today's weather via .m2/repository .jar
+        args = [
+             "--java",
+             "21",
+             "--quiet",
+             "org.acme:weather:1.0.1-SNAPSHOT:runner"
+          ]
+
+
         server_params = StdioServerParameters(
-            command=command,
-            args=[server_script_path],
+            command="/Users/burr/.jbang/bin/jbang",
+            args=args,
             env=None
         )
         
@@ -188,13 +197,15 @@ class MCPClient:
         await self.exit_stack.aclose()
 
 async def main():
-    if len(sys.argv) < 2:
-        print("Usage: python client.py <path_to_server_script>")
-        sys.exit(1)
+    # args not needed with jbang examples, they are hardcoded
+    # if len(sys.argv) < 2:
+    #     print("Usage: python client.py <path_to_server_script>")
+    #     sys.exit(1)
         
-    client = MCPClient()
+    client = MCPClient(debug=False)
     try:
-        await client.connect_to_server(sys.argv[1])
+        # await client.connect_to_server(sys.argv[1])
+        await client.connect_to_server()
         await client.chat_loop()
     finally:
         await client.cleanup()
