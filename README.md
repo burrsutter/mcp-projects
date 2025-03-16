@@ -12,10 +12,15 @@ Note: jbang with Java server requires pre-compilation
 
 ## MCP Server: Python Hello
 
+https://github.com/modelcontextprotocol/python-sdk
+
+
 `mcp-server-python-hello` - should work "out of the box" assuming a decent version of Python on the machine
 
 
 ## MCP Server: Node TMDB
+
+https://github.com/modelcontextprotocol/typescript-sdk
 
 
 `mcp-server-node-tmdb`
@@ -23,6 +28,8 @@ Note: jbang with Java server requires pre-compilation
 Uses https://www.themoviedb.org/ API which requires an API key within the client's .env
 
 ## MCP Server: Java Weather
+
+https://quarkus.io/blog/introducing-mcp-servers/
 
 
 `mcp-server-java-weather`
