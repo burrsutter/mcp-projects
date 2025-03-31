@@ -48,14 +48,14 @@ spring.datasource.password=admin
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/sales-order-api.git
-cd sales-order-api
+git clone https://github.com/burrsutter/mcp-erp-demo.git
+cd mcp-erp-demo/sales-orders-java-rest-crud-postgres
 ```
 
 2. Build the application:
 
 ```bash
-mvn clean install
+mvn clean package
 ```
 
 3. Run the application:

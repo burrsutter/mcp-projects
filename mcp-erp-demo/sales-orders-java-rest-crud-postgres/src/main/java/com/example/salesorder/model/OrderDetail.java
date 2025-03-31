@@ -37,9 +37,14 @@ public class OrderDetail {
     @Schema(description = "Unique identifier of the order detail", example = "1")
     private Long id;
 
+    @NotBlank(message = "Product id is required")
+    @Column(name = "product_id", nullable = false)
+    @Schema(description = "product identifier", example = "MUG-SMART-001")
+    private String productId;
+    
     @NotBlank(message = "Product name is required")
     @Column(name = "product_name", nullable = false)
-    @Schema(description = "Name of the product", example = "Smartphone XYZ")
+    @Schema(description = "Name of the product", example = "RetroTech Smart Ceramic Mug")
     private String productName;
 
     @NotNull(message = "Quantity is required")

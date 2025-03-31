@@ -1,8 +1,8 @@
 -- Drop the table if it exists
-DROP TABLE IF EXISTS erp_products;
+DROP TABLE IF EXISTS products;
 
 -- Create the products table
-CREATE TABLE erp_products (
+CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     sku VARCHAR(50) NOT NULL UNIQUE,
     name VARCHAR(255) NOT NULL,
@@ -21,29 +21,29 @@ CREATE TABLE erp_products (
 );
 
 -- Create indexes for better performance
-CREATE INDEX idx_products_sku ON erp_products(sku);
-CREATE INDEX idx_products_name ON erp_products(name);
-CREATE INDEX idx_products_category ON erp_products(category);
-CREATE INDEX idx_products_price ON erp_products(price);
-CREATE INDEX idx_products_is_active ON erp_products(is_active);
+CREATE INDEX idx_products_sku ON products(sku);
+CREATE INDEX idx_products_name ON products(name);
+CREATE INDEX idx_products_category ON products(category);
+CREATE INDEX idx_products_price ON products(price);
+CREATE INDEX idx_products_is_active ON products(is_active);
 
 -- Add comments to the table and columns for documentation
-COMMENT ON TABLE erp_products IS 'Stores product information for the ERP system';
-COMMENT ON COLUMN erp_products.id IS 'Unique identifier for the product';
-COMMENT ON COLUMN erp_products.sku IS 'Stock Keeping Unit, unique identifier for the product';
-COMMENT ON COLUMN erp_products.name IS 'Product name';
-COMMENT ON COLUMN erp_products.description IS 'Detailed product description';
-COMMENT ON COLUMN erp_products.category IS 'Product category';
-COMMENT ON COLUMN erp_products.price IS 'Selling price of the product';
-COMMENT ON COLUMN erp_products.cost IS 'Cost price of the product';
-COMMENT ON COLUMN erp_products.stock_quantity IS 'Current stock quantity';
-COMMENT ON COLUMN erp_products.manufacturer IS 'Product manufacturer';
-COMMENT ON COLUMN erp_products.supplier IS 'Product supplier';
-COMMENT ON COLUMN erp_products.weight IS 'Product weight';
-COMMENT ON COLUMN erp_products.dimensions IS 'Product dimensions (LxWxH)';
-COMMENT ON COLUMN erp_products.is_active IS 'Product status (1 for active, 0 for inactive)';
-COMMENT ON COLUMN erp_products.created_at IS 'Timestamp when the product record was created';
-COMMENT ON COLUMN erp_products.updated_at IS 'Timestamp when the product record was last updated';
+COMMENT ON TABLE products IS 'Stores product information for the ERP system';
+COMMENT ON COLUMN products.id IS 'Unique identifier for the product';
+COMMENT ON COLUMN products.sku IS 'Stock Keeping Unit, unique identifier for the product';
+COMMENT ON COLUMN products.name IS 'Product name';
+COMMENT ON COLUMN products.description IS 'Detailed product description';
+COMMENT ON COLUMN products.category IS 'Product category';
+COMMENT ON COLUMN products.price IS 'Selling price of the product';
+COMMENT ON COLUMN products.cost IS 'Cost price of the product';
+COMMENT ON COLUMN products.stock_quantity IS 'Current stock quantity';
+COMMENT ON COLUMN products.manufacturer IS 'Product manufacturer';
+COMMENT ON COLUMN products.supplier IS 'Product supplier';
+COMMENT ON COLUMN products.weight IS 'Product weight';
+COMMENT ON COLUMN products.dimensions IS 'Product dimensions (LxWxH)';
+COMMENT ON COLUMN products.is_active IS 'Product status (1 for active, 0 for inactive)';
+COMMENT ON COLUMN products.created_at IS 'Timestamp when the product record was created';
+COMMENT ON COLUMN products.updated_at IS 'Timestamp when the product record was last updated';
 
 -- Create a trigger to automatically update the updated_at column
 CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -55,6 +55,6 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER update_products_updated_at
-BEFORE UPDATE ON erp_products
+BEFORE UPDATE ON products
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();

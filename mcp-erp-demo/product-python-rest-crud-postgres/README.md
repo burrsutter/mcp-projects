@@ -34,8 +34,8 @@ A Python REST API for managing an ERP Product catalog with CRUD operations using
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/erp-product-catalog-api.git
-cd erp-product-catalog-api
+git clone https://github.com/burrsutter/mcp-projects/
+cd mcp-erp-demo/product-python-rest-crud-postgres
 ```
 
 2. Create a virtual environment and activate it:
@@ -80,7 +80,7 @@ DB_NAME=erp_product_catalog
 DB_USER=postgres
 DB_PASSWORD=admin
 API_HOST=0.0.0.0
-API_PORT=8000
+API_PORT=8001
 DEBUG=True
 ```
 

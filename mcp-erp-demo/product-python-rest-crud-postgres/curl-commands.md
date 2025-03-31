@@ -14,7 +14,7 @@ This document provides examples of how to interact with the ERP Product Catalog 
 
 ```bash
 curl -X POST \
-  http://localhost:8000/products/ \
+  http://localhost:8001/products/ \
   -H 'Content-Type: application/json' \
   -d '{
     "sku": "PROD-001",

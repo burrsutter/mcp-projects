@@ -34,9 +34,15 @@ public class Order {
     private Long id;
 
     @NotBlank(message = "Order number is required")
-    @Column(name = "order_number", unique = true, nullable = false)
+    @Column(name = "orderNumber", unique = true, nullable = false)
     @Schema(description = "Unique order number", example = "ORD-2025-0001")
     private String orderNumber;
+
+    @NotBlank(message = "Customer id is required")
+    @Column(name = "customer_id", nullable = false)
+    @Schema(description = "ID of the customer", example = "John Doe")
+    private String customerId;
+
 
     @NotBlank(message = "Customer name is required")
     @Column(name = "customer_name", nullable = false)
