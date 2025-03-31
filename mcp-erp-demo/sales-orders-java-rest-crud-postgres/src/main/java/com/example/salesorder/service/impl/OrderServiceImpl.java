@@ -1,7 +1,10 @@
 package com.example.salesorder.service.impl;
 
 import com.example.salesorder.dto.OrderDTO;
+import com.example.salesorder.dto.OrderDetailDTO;
+import com.example.salesorder.exception.ResourceNotFoundException;
 import com.example.salesorder.model.Order;
+import com.example.salesorder.model.OrderDetail;
 import com.example.salesorder.model.OrderStatus;
 import com.example.salesorder.repository.OrderRepository;
 import com.example.salesorder.service.OrderService;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -104,5 +108,53 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(status);
         Order updatedOrder = orderRepository.save(order);
         return orderMapper.toDTO(updatedOrder);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public String generateInvoiceMarkdown(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + orderId));
+
+        StringBuilder markdown = new StringBuilder();
+        
+        // Header
+        markdown.append("# Invoice\n\n");
+        markdown.append("## Order Details\n");
+        markdown.append(String.format("- **Order Number:** %s\n", order.getOrderNumber()));
+        markdown.append(String.format("- **Order Date:** %s\n", 
+            order.getOrderDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+        markdown.append(String.format("- **Status:** %s\n\n", order.getStatus()));
+
+        // Customer Information
+        markdown.append("## Customer Information\n");
+        markdown.append(String.format("- **Customer ID:** %s\n", order.getCustomerId()));
+        markdown.append(String.format("- **Customer Name:** %s\n\n", order.getCustomerName()));
+
+        // Order Items
+        markdown.append("## Order Items\n");
+        markdown.append("| Product ID | Product Name | Quantity | Unit Price | Subtotal |\n");
+        markdown.append("|------------|--------------|----------|------------|----------|\n");
+        
+        for (OrderDetail detail : order.getOrderDetails()) {
+            markdown.append(String.format("| %s | %s | %d | $%.2f | $%.2f |\n",
+                detail.getProductId(),
+                detail.getProductName(),
+                detail.getQuantity(),
+                detail.getUnitPrice(),
+                detail.getSubtotal()));
+        }
+
+        // Total
+        markdown.append("\n## Total\n");
+        markdown.append(String.format("**Total Amount:** $%.2f\n", order.getTotalAmount()));
+
+        // Footer
+        markdown.append("\n---\n");
+        markdown.append("*This is a computer-generated invoice. No signature required.*\n");
+        markdown.append(String.format("*Generated on: %s*", 
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+
+        return markdown.toString();
     }
 }

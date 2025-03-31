@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -152,5 +153,13 @@ public class OrderController {
             @RequestParam OrderStatus status) {
         OrderDTO updatedOrder = orderService.updateOrderStatus(id, status);
         return ResponseEntity.ok(updatedOrder);
+    }
+
+    @Operation(summary = "Generate invoice markdown", description = "Generates a markdown-based invoice for a given order")
+    @GetMapping(value = "/invoice/{id}", produces = MediaType.TEXT_MARKDOWN_VALUE)
+    public ResponseEntity<String> generateInvoiceMarkdown(
+            @Parameter(description = "Order ID", required = true) @PathVariable Long id) {
+        String markdown = orderService.generateInvoiceMarkdown(id);
+        return ResponseEntity.ok(markdown);
     }
 }

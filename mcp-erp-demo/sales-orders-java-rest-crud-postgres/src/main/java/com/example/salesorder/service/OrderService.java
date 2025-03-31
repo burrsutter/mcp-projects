@@ -1,6 +1,8 @@
 package com.example.salesorder.service;
 
 import com.example.salesorder.dto.OrderDTO;
+import com.example.salesorder.dto.OrderDetailDTO;
+import com.example.salesorder.model.Order;
 import com.example.salesorder.model.OrderStatus;
 
 import java.time.LocalDateTime;
@@ -88,4 +90,11 @@ public interface OrderService {
      * @return the updated order
      */
     OrderDTO updateOrderStatus(Long id, OrderStatus status);
+
+    /**
+     * Generates a markdown-based invoice for a given order
+     * @param orderId The ID of the order to generate the invoice for
+     * @return A markdown string containing the formatted invoice
+     */
+    String generateInvoiceMarkdown(Long orderId);
 }
